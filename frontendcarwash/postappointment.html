@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+      // Handle form submission
+        $('#myForm').submit(function(event) {
+        // Prevent default form submission
+        event.preventDefault();
+
+        // Serialize form data into a JSON object
+        var formData = JSON.stringify({
+            name: $('#name').val(),
+            mail: $('#email').val(),
+            date: $('#date').val()
+        });
+
+        // Send AJAX request to REST API endpoint
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/api/v1/appointment',
+            data: formData,
+            contentType: 'application/json',
+            success: function(response) {
+            // Handle successful response from REST API
+            $('#myForm').html('<p>Appointment booked successfully!</p>');
+        },
+        error: function(xhr, status, error) {
+            // Handle error response from REST API
+            $('#myForm').html('<p>There was an error</p>');
+            }
+            });
+        });
+    });
+    </script>
+
+    <title>Book Appointment</title>
+</head>
+<body style="text-align: center; font-size: 2.5rem; background-color: #93BFCF;">
+    <style>
+        a:link, a:visited {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+    <h1>Book your appointment:</h1>
+    <br>
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+    
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br><br>
+    
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date"><br><br>
+    
+        <button type="submit">Submit</button>
+    </form>
+
+    <div style="padding-top: 100px;">
+        <a href="appointment.html">Back</a>
+        <br>
+        <a href="index.html">Home</a>
+    </div>
+</body>
+</html>
